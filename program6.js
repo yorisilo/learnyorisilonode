@@ -6,7 +6,7 @@ var ext = process.argv[3];
 // コールバック関数を使うことによりネストした関数内の値を取ってくることができる．
 // 限定継続の shift/reset 的に使える．
 
-var files = find(dir, ext, function(err, files) {
+find(dir, ext, function(err, files) {
   if(err) throw err;
   files.forEach(function(file) {
     console.log( file );
