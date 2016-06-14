@@ -1,12 +1,15 @@
 var fs = require('fs');
 
-var lines = function(file) {
+var file = process.argv[2];
+
+var lines = function(file, callback) {
   fs.readFile(file, function(err, data) {
     var lines = data.toString().split('\n').length - 1;
-    console.log( lines );
+    return callback(lines);
   });
 };
 
-var file = process.argv[2];
 
-lines(file);
+lines(file, function(lines) {
+  console.log( lines );
+});
