@@ -3,7 +3,7 @@ var http = require('http');
 var urls = process.argv.slice(2);
 var count = 0;
 
-  var results = [];
+var results = [];
 for(var i = 0; i < urls.length; i++) {
   results.push('');
 }
@@ -23,7 +23,7 @@ urls.forEach(function(url, i) {
 
     res.on('end', function() {
       count++;
-      if (count == results.length) {
+      if (count == urls.length) {
         printResults(results);
       }
     });
