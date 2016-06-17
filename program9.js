@@ -1,6 +1,12 @@
 var http = require('http');
 
 var urls = process.argv.slice(2);
+var count = 0;
+
+  var results = [];
+for(var i = 0; i < urls.length; i++) {
+  results.push('');
+}
 
 function printResults(results) {
   for(var i = 0; i < results.length; i++) {
@@ -9,21 +15,16 @@ function printResults(results) {
 };
 
 urls.forEach(function(url, i) {
-  var results = [];
   http.get(url, function(res) {
     res.setEncoding('utf-8');
-    var result = '';
     res.on('data', function(chunk) {
-      result += chunk;
+      results[i] += chunk;
     });
 
     res.on('end', function() {
-      results.push(result);
-
-      if(i == results.length) {
-        for(var i = 0; i < results.length; i++) {
-          console.log(results[i]);
-        }
+      count++;
+      if (count == results.length) {
+        printResults(results);
       }
     });
   }).on('error', function(e) {
