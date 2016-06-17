@@ -2,14 +2,14 @@ var http = require('http');
 
 var urls = process.argv.slice(2);
 
-var printResults = function(results) {
-  for(var i = 0; i < urls.length; i++) {
+function printResults(results) {
+  for(var i = 0; i < results.length; i++) {
     console.log(results[i]);
   }
 };
 
-var results = [];
 urls.forEach(function(url, i) {
+  var results = [];
   http.get(url, function(res) {
     res.setEncoding('utf-8');
     var result = '';
@@ -18,10 +18,15 @@ urls.forEach(function(url, i) {
     });
 
     res.on('end', function() {
-      console.log(result);
+      results.push(result);
+
+      if(i == results.length) {
+        for(var i = 0; i < results.length; i++) {
+          console.log(results[i]);
+        }
+      }
     });
+  }).on('error', function(e) {
+    console.log(e);
   });
 });
-
-// なぜだ．．．
-// forEach で 前から一個ずつ get していってるのに，endのところで printされるのは順番がおかしなことになる．
